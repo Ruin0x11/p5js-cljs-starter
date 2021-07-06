@@ -73,7 +73,7 @@
       (p5/push)
       (p5/translate (get pt :x) (get pt :y))
       (p5/rotate angle)
-      (let [xoff (* 10 (p5/sin (/ (+ f (* i 5)) 30)))
+      (let [xoff 0
             d (+ xoff d)
             weight (p5/max 2 (* 6 (p5/cos (* 0.2 (+ f (* (- i) 1.01)) 0.1))))]
         (p5/stroke-weight weight)
