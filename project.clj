@@ -1,4 +1,4 @@
-(defproject p5 "0.1.0-SNAPSHOT"
+(defproject sketch "0.1.0-SNAPSHOT"
   :description "FIXME: write this!"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -8,30 +8,32 @@
 
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [org.clojure/clojurescript "1.10.866"]
-                 [org.clojure/core.async  "1.3.618"]]
+                 [org.clojure/core.async "1.3.618"]
+                 [camel-snake-kebab "0.4.2"]]
 
   :plugins [[lein-figwheel "0.5.16"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
 
-  :source-paths ["src"]
+  :source-paths ["src/clj", "src/cljs"]
 
+  :clean-targets ^{:protect false} ["resources/public/cljs-out"]
   :cljsbuild {:builds
               [{:id "dev"
-                :source-paths ["src"]
+                :source-paths ["src/cljs"]
 
                 ;; The presence of a :figwheel configuration here
                 ;; will cause figwheel to inject the figwheel client
                 ;; into your build
-                :figwheel {:on-jsload "p5.core/on-js-reload"
+                :figwheel {:on-jsload "sketch.core/on-js-reload"
                            ;; :open-urls will pop open your application
                            ;; in the default browser once Figwheel has
                            ;; started and compiled your application.
                            ;; Comment this out once it no longer serves you.
                            :open-urls ["http://localhost:3449/index.html"]}
 
-                :compiler {:main p5.core
+                :compiler {:main sketch.core
                            :asset-path "js/compiled/out"
-                           :output-to "resources/public/js/compiled/p5.js"
+                           :output-to "resources/public/js/compiled/sketch.js"
                            :output-dir "resources/public/js/compiled/out"
                            :source-map-timestamp true
                            ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
@@ -41,9 +43,9 @@
                ;; production. You can build this with:
                ;; lein cljsbuild once min
                {:id "min"
-                :source-paths ["src"]
-                :compiler {:output-to "resources/public/js/compiled/p5.js"
-                           :main p5.core
+                :source-paths ["src/cljs"]
+                :compiler {:output-to "resources/public/js/compiled/sketch.js"
+                           :main sketch.core
                            :optimizations :advanced
                            :pretty-print false}}]}
 
@@ -94,7 +96,7 @@
                                   [com.bhauman/rebel-readline-cljs "0.1.4"]
                                   [cider/piggieback "0.5.2"]]
                    ;; need to add dev source path here to get user.clj loaded
-                   :source-paths ["src" "dev"]
+                   :source-paths ["src/clj", "src/cljs", "dev"]
                    ;; for CIDER
                    ;; :plugins [[cider/cider-nrepl "0.12.0"]]
                    :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}
@@ -103,4 +105,4 @@
                                                      :target-path]}}
 
   :aliases {"fig"       ["trampoline" "run" "-m" "figwheel.main"]
-            "fig:build" ["trampoline" "run" "-m" "figwheel.main" "-b" "p5" "-r"]})
+            "fig:build" ["trampoline" "run" "-m" "figwheel.main" "-b" "sketch" "-r"]})
