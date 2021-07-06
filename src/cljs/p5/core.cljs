@@ -1,5 +1,5 @@
 (ns p5.core
-  (:refer-clojure :exclude [pop])
+  (:refer-clojure :exclude [pop max min])
   (:require [camel-snake-kebab.core :as csk]))
 
 (def p (atom nil))
@@ -28,6 +28,9 @@
 (defn mouse-y [] (. @p -mouseY))
 (defn mouse-is-pressed [] (. @p -mouseIsPressed))
 (defn frame-count [] (. @p -frameCount))
+
+(defn min [a b] (. @p min a b))
+(defn max [a b] (. @p max a b))
 
 (defn sin [x] (. @p sin x))
 (defn cos [x] (. @p cos x))

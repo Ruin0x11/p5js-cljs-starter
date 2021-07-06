@@ -12,7 +12,7 @@
 
 (def P (atom nil))
 (def size 500)
-(def text "point")
+(def text "rinari")
 (def font-size 256)
 
 
@@ -52,7 +52,7 @@
                   :pts (p5.font/text-to-points
                         (get state :font)
                         text 0 0 font-size
-                        {:sample-factor 0.1 ; increase for more points
+                        {:sample-factor 0.05 ; increase for more points
                          :simplify-threshold 0.0 ; increase to remove collinear points
                          }))))
   (window-resized))
@@ -65,17 +65,19 @@
   (p5/no-fill)
 
   (let [f (p5/frame-count)
-        d (+ (* 50 (p5/cos (/ f 30))) (+ 10 (p5/sin (/ f 20))))
-        angle (+ (/ f 50) (- (p5/cos (/ f 50))))]
+        d (+ (* 2 (p5/cos (/ f 30))) (+ 10 (p5/sin (/ f 20))))
+        angle (+ (* 0.01 f) (- (p5/cos (/ f 50))))]
     (p5/push)
     (p5/translate 60 (/ (* (p5/height) 5) 8))
     (macros/doseq-indexed i [pt (get @*state :pts)]
       (p5/push)
       (p5/translate (get pt :x) (get pt :y))
-      ;; (p5/rotate angle)
-      (let [xoff (* 30 (p5/sin (/ (+ f (* i 5)) 30)))
-            d (+ xoff d)]
-        (p5/line (+ xoff (- d)) (- d) (+ xoff d) d))
+      (p5/rotate angle)
+      (let [xoff (* 10 (p5/sin (/ (+ f (* i 5)) 30)))
+            d (+ xoff d)
+            weight (p5/max 2 (* 6 (p5/cos (* 0.2 (+ f (* (- i) 1.01)) 0.1))))]
+        (p5/stroke-weight weight)
+        (p5/line (+ xoff (- d)) (- d) d d))
       (p5/pop)
       )
     (p5/pop))

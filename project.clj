@@ -14,7 +14,7 @@
   :plugins [[lein-figwheel "0.5.16"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
 
-  :source-paths ["src/clj", "src/cljs"]
+  :source-paths ["src/clj" "src/cljs"]
 
   :clean-targets ^{:protect false} ["resources/public/cljs-out"]
   :cljsbuild {:builds
@@ -96,7 +96,7 @@
                                   [com.bhauman/rebel-readline-cljs "0.1.4"]
                                   [cider/piggieback "0.5.2"]]
                    ;; need to add dev source path here to get user.clj loaded
-                   :source-paths ["src/clj", "src/cljs", "dev"]
+                   :source-paths ["src/clj" "src/cljs" "dev"]
                    ;; for CIDER
                    ;; :plugins [[cider/cider-nrepl "0.12.0"]]
                    :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}

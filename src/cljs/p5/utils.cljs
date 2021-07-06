@@ -11,6 +11,6 @@
 (defn jsify-keys
   "Recursively transforms all map keys from strings to camelcase keywords."
   [m]
-  (let [f (fn [[k v]] (if (string? k) [(csk/->camelCaseKeyword k) v] [k v]))]
+  (let [f (fn [[k v]] (if (or (keyword? k) (string? k)) [(csk/->camelCaseKeyword k) v] [k v]))]
     ;; only apply to maps
     (clojure.walk/postwalk (fn [x] (if (map? x) (into {} (map f x)) x)) m)))
